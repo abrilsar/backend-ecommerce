@@ -7,7 +7,15 @@ async function signIn(
   reply: FastifyReply
 ) {
   // TODO: fix this type here
-  return authService.signIn(request.body as any);
+  return authService.signIn(request.body as TSignInInput);
 }
 
-export const authController = Object.freeze({ signIn });
+async function register(
+  request: FastifyRequest<{ Body: TSignInInput }>,
+  reply: FastifyReply
+) {
+  // TODO: fix this type here
+  return authService.register(request.body as any);
+}
+
+export const authController = Object.freeze({ signIn, register});

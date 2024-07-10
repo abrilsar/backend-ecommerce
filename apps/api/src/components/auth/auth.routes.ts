@@ -5,5 +5,7 @@ export async function authRouter(
   fastify: FastifyInstance,
   options?: FastifyPluginOptions
 ) {
-  fastify.get('/v1/auth/sign-in', authController.signIn);
+  fastify.post('/sign-in', authController.signIn);
+  fastify.post('/register', authController.register);
+  fastify.get('/prueba', () => {return "holis"});
 }
