@@ -1,33 +1,35 @@
 import type { z } from 'zod';
 import { Schema, type Types, type Document } from 'mongoose';
-import { userDefinition } from './user.dto';
+import { productDefinition } from './product.dto';
 
-export type IUser = z.infer<typeof userDefinition>;
+export type IProduct = z.infer<typeof productDefinition>;
 
-export type UserDocument = IUser & Document<Types.ObjectId, any, IUser>;
+export type ProductDocument = IProduct & Document<Types.ObjectId, any, IProduct>;
 
-export const userSchema = new Schema<IUser, UserDocument>(
+export const productSchema = new Schema<IProduct, ProductDocument>(
   {
     name: {
       type: String,
       required: [true, ''],
       trim: true,
     },
-    email: {
+    description: {
       type: String,
       required: [true, ''],
       trim: true,
-      lowercase: true,
     },
-    password: {
-      type: String,
+    price: {
+      type: Number,
       required: [true, ''],
     },
-    role: {
+    category: {
       type: String,
       required: [true, ''],
-      enum: ['admin', 'client'],
       trim: true,
+    },
+    stock: {
+      type: Number,
+      required: [true, ''],
     },
   },
   { timestamps: true }
