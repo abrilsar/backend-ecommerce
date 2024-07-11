@@ -8,4 +8,6 @@ export async function productRouter(
   // fastify.get('/v1/users/:id', productController.findOne);
 
   // fastify.get('/v1/users', productController.findAll);
+  // fastify.get('/', {config: { allowedRoles: ['admin', 'client'] }},()=>{return 'the black dog'});
+  fastify.get('/', ()=>{return 'the black dog'});
 }

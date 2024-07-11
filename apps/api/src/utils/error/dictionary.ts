@@ -26,6 +26,14 @@ export const errorTitleDictionary: {
       en: 'Valid token most be provided',
       es: 'Debe proporcionar un token válido',
     },
+    invalidCredentials: {
+      en: 'The provided email or password is incorrect',
+      es: 'El correo o contraseña proporcionados son incorrectos',
+    },
+    invalidPassword: {
+      en: 'The provided password is incorrect',
+      es: 'La contraseña proporcionados es incorrectos',
+    },
   },
   403: {
     default: {
@@ -41,6 +49,14 @@ export const errorTitleDictionary: {
     user: {
       en: 'User not found',
       es: 'Usuario no encontrado',
+    },
+    product: {
+      en: 'Product not found',
+      es: 'Producto no encontrado',
+    },
+    order: {
+      en: 'Order not found',
+      es: 'Pedido no encontrado',
     },
   },
   409: {

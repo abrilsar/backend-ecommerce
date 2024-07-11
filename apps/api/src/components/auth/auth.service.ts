@@ -3,6 +3,7 @@ import { TSignInInput } from './auth.dto';
 import { User } from '@/components/users/user.model';
 import { userDefinition } from '@avila-tek/models';
 import { verify } from 'argon2';
+import { FastifyRequest } from 'fastify';
 
 /**
  * @async
@@ -20,13 +21,12 @@ import { verify } from 'argon2';
  * @version 1
  */
 
-async function signIn(data: TSignInInput) {
-  const {email, password} = data
+async function signIn(req: FastifyRequest<{ Body: TSignInInput }>) {
+  const {email, password} = req.body
 
   try {
     
     let user = await User.findOne({email})
-    console.log("user: ", user)
 
     if(!user){
       throw Error('401-invalidCredentials')
@@ -37,8 +37,7 @@ async function signIn(data: TSignInInput) {
     if(!valid){
       throw Error('401-invalidPassword')
     }
-
-    const token = jwt.sign(user.toJSON(), process.env.JWT_SECRET!, {expiresIn: '2h'});
+    const token = req.jwt.sign(user.toJSON())
 
     return {
       user,
@@ -46,19 +45,20 @@ async function signIn(data: TSignInInput) {
     };
 
   } catch (error: any) {
+    console.log("Erorr: ", error)
     throw Error(error.message === ''? '500-default': error.message)
   }
 }
 
-async function register(data: typeof userDefinition._type) {
-  const {email} = data
+async function register(req: FastifyRequest<{ Body: typeof userDefinition._type }>) {
+const {email} = req.body
   try {
     let user = await User.findOne({email})
 
     if (user){
       throw Error('409-userAlreadyExists')
     }
-    user = new User(data)
+    user = new User(req.body)
     
     await user.save()
 

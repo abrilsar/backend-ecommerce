@@ -1,8 +1,10 @@
 import type { z } from 'zod';
 import { Schema, type Types, type Document } from 'mongoose';
-import { userDefinition } from './user.dto';
+import { phoneDefinition, userDefinition } from './user.dto';
 
 export type IUser = z.infer<typeof userDefinition>;
+
+export type IPhone = z.infer<typeof phoneDefinition>;
 
 export type UserDocument = IUser & Document<Types.ObjectId, any, IUser>;
 
@@ -23,12 +25,10 @@ export const userSchema = new Schema<IUser, UserDocument>(
       type: String,
       required: [true, ''],
     },
-    role: {
-      type: String,
+    roles:{
+      type: [{ type: String, enum: ['admin', 'client', 'owner'] }],
       required: [true, ''],
-      enum: ['admin', 'client'],
-      trim: true,
-    },
+    }
   },
   { timestamps: true }
 );

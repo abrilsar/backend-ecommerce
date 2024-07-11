@@ -1,5 +1,6 @@
 import type { FastifyReply, FastifyRequest } from 'fastify';
 import { authService } from '@/components/auth/auth.service';
+import { userDefinition } from '@avila-tek/models';
 import { TSignInInput } from '@/components/auth/auth.dto';
 
 async function signIn(
@@ -7,15 +8,15 @@ async function signIn(
   reply: FastifyReply
 ) {
   // TODO: fix this type here
-  return authService.signIn(request.body as TSignInInput);
+  return authService.signIn(request);
 }
 
 async function register(
-  request: FastifyRequest<{ Body: TSignInInput }>,
+  request: FastifyRequest<{ Body: typeof userDefinition._type }>,
   reply: FastifyReply
 ) {
   // TODO: fix this type here
-  return authService.register(request.body as any);
+  return authService.register(request);
 }
 
 export const authController = Object.freeze({ signIn, register});

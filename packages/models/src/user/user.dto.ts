@@ -10,7 +10,7 @@ export const userDefinition = z.object({
   name: z.string().min(3),
   email: z.string().email().min(5),
   password: z.string().min(8),
-  role: z.enum(['admin', 'client']),
+  roles: z.array(z.enum(['admin', 'client', 'owner'])).min(1),
   createdAt: z.string().datetime().or(z.date()).nullable().optional(),
   updatedAt: z.string().datetime().or(z.date()).nullable().optional(),
 });

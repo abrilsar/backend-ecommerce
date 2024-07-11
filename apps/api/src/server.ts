@@ -8,6 +8,8 @@ import sentryPlugin from '@immobiliarelabs/fastify-sentry';
 import { nodeProfilingIntegration } from '@sentry/profiling-node';
 import { Integrations } from '@sentry/node';
 import { swaggerPlugin } from './plugins/swagger';
+import { jwtPlugin } from './plugins/jwt';
+import {authPlugin} from './plugins/auth'
 import { handleError } from './utils/error/handler';
 import { authRouter } from '@/components/auth/auth.routes';
 import { userRouter } from '@/components/users/user.routes';
@@ -48,6 +50,34 @@ export async function createServer() {
     await swaggerPlugin(server);
   }
 
+  await jwtPlugin(server),
+
+  server.addHook('onRequest', async (req, res) => {
+    if (req.url.startsWith('/api/v1/auth')) {
+      req.jwt = server.jwt
+      return
+    }
+    await server.authenticate(req, res)
+  })
+
+  // await authPlugin(server)
+  // server.addHook('preHandler', async (req, res) => {
+  //   if (!req.url.startsWith('/api/v1/auth')) {
+  //     try {
+  //       await server.auth([server.authorize]);
+  //       console.log('Autenticación exitosa');
+  //     } catch (error) {
+  //       console.error('Error de autenticación:', error);
+  //       return res.status(401).send({ error: 'Unauthorized' });
+  //     }
+  //   }
+  // });
+
+  await authPlugin(server)
+  server.addHook('preHandler', server.auth([
+    server.authorize
+  ]))
+
   if (process.env.NODE_ENV === 'production') {
     await server.register(sentryPlugin, {
       dsn: process.env.SENTRY_DSN,
@@ -75,8 +105,8 @@ export async function createServer() {
 
   await server.register(authRouter, {prefix: '/api/v1/auth'});
   await server.register(userRouter, {prefix: '/api/v1/user'});
-  await server.register(productRouter, {prefix: '/api/v1/product'});
-  await server.register(orderRouter, {prefix: '/api/v1/order'});
+  await server.register(productRouter, {prefix: '/api/v1/products'});
+  await server.register(orderRouter, {prefix: '/api/v1/orders'});
 
   await server.ready();
   return server;
