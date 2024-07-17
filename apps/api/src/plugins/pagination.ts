@@ -7,15 +7,15 @@ export async function paginate(model: Model<any>, options: PaginationOptions): P
 
 
     if (typeof limit !== "number" || limit <= 0) {
-    throw new Error("Invalid limit parameter");
+    throw new Error("400-default");
     }
     
     if (cursor && !mongoose.Types.ObjectId.isValid(cursor)) {
-        throw Error('Invalid cursor');
+        throw Error('400-default');
     }
     
     if (!["next", "prev"].includes(direction)) {
-        throw new Error("Invalid direction parameter");
+        throw new Error("400-default");
     }
 
     const filter: FilterQuery<any> = { ...query };
@@ -61,8 +61,7 @@ export async function paginate(model: Model<any>, options: PaginationOptions): P
     };
 
       } catch (error) {
-        console.error(error);
-        throw new Error('Error fetching data');
+        throw new Error('400-default');
       }
 }
 

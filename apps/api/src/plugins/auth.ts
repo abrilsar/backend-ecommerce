@@ -14,11 +14,11 @@ export async function authPlugin(server: FastifyInstance) {
             const allowedRoles = request.routeOptions.config.allowedRoles;
             if (allowedRoles && request.user?.roles) {
                 if (!allowedRoles.some(role => request.user.roles.includes(role))) {                    
-                    throw Error('401-default');
+                    throw Error('Not authorized');
                 }
             }
-            
-          } catch (error: any) {          
+          } catch (error: any) {  
+            console.log("Puede ser: ", error.message)        
             const message = errorMessages[error.message] || "500-default";
             throw Error(message);
           }

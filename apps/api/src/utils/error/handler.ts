@@ -27,8 +27,6 @@ export function handleError(
     status,
     detail: `${error.stack ?? error.cause ?? error.message}`,
   };
-  // Log error
   console.log(standardError);
-  // Send error response
   reply.status(status).send(standardError);
 }
