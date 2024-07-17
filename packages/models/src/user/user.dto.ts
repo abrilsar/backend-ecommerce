@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { Schema, type Types, type Document } from 'mongoose';
+import { Schema, Types, type Document } from 'mongoose';
 
 export const phoneDefinition = z.object({
   code: z.string().min(2),
@@ -11,6 +11,7 @@ export const userDefinition = z.object({
   email: z.string().email().min(5),
   password: z.string().min(8),
   roles: z.array(z.enum(['admin', 'client', 'owner'])).min(1),
+  orders: z.array(z.instanceof(Types.ObjectId)),
   createdAt: z.string().datetime().or(z.date()).nullable().optional(),
   updatedAt: z.string().datetime().or(z.date()).nullable().optional(),
 });

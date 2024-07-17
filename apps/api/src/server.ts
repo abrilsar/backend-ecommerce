@@ -104,7 +104,7 @@ export async function createServer() {
   // routes
 
   await server.register(authRouter, {prefix: '/api/v1/auth'});
-  await server.register(userRouter, {prefix: '/api/v1/user'});
+  await server.register(userRouter, {prefix: '/api/v1/users'});
   await server.register(productRouter, {prefix: '/api/v1/products'});
   await server.register(orderRouter, {prefix: '/api/v1/orders'});
 

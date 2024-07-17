@@ -5,7 +5,9 @@ export async function userRouter(
   fastify: FastifyInstance,
   options?: FastifyPluginOptions
 ) {
-  fastify.get('/v1/users/:id', userController.findOne);
+  fastify.get('/:id', {config: { allowedRoles: ['admin', 'client'] }}, userController.findOne);
+  
+  fastify.get('/:id/orders', {config: { allowedRoles: ['admin', 'client'] }}, userController.findOrders);
 
-  fastify.get('/v1/users', userController.findAll);
+  fastify.get('/',{config: { allowedRoles: ['admin'] }}, userController.findAll);
 }

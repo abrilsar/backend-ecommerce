@@ -22,6 +22,14 @@ export const errorTitleDictionary: {
       en: 'Unauthorized',
       es: 'No autorizado',
     },
+    notFound: {
+      en: 'No Authorization was found in request headers',
+      es: 'No se encontró Autorización en la cabecera de la solicitud',
+    },
+    expired: {
+      en: "Authorization token expired",
+      es: "El token de autorización ha expirado",
+    },
     token: {
       en: 'Valid token most be provided',
       es: 'Debe proporcionar un token válido',

@@ -54,3 +54,23 @@ declare module '@fastify/jwt' {
       payload: UserPayload
     }
   }
+
+export interface PaginationOptions {
+    limit: number;
+    cursor?: string;
+    direction: 'next' | 'prev';
+    sort?: string;
+    query?: any;
+  }
+
+export interface PaginationResults {
+    results: any[],
+    hasNext: boolean,
+    hasPrev: boolean,
+    nextCursor: string,
+    prevCursor: string,
+}
+
+export interface ParamsType {
+    id: string;
+  }

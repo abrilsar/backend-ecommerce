@@ -5,7 +5,10 @@ export async function orderRouter(
   fastify: FastifyInstance,
   options?: FastifyPluginOptions
 ) {
-  // fastify.get('/v1/users/:id', orderController.findOne);
-
-  // fastify.get('/v1/users', orderController.findAll);
+  // prefix: /api/v1/orders
+  fastify.get('/:id',{config: { allowedRoles: ['admin'] }}, orderController.findOne);
+  fastify.get('/', {config: { allowedRoles: ['admin'] }}, orderController.findAll);
+  fastify.post('/', {config: { allowedRoles: ['admin'] }}, orderController.createOne);
+  fastify.delete('/:id', {config: { allowedRoles: ['admin'] }}, orderController.deleteOne);
+  fastify.patch('/:id', {config: { allowedRoles: ['admin'] }}, orderController.updateOne);
 }
