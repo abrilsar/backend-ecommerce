@@ -9,12 +9,13 @@ import { nodeProfilingIntegration } from '@sentry/profiling-node';
 import { Integrations } from '@sentry/node';
 import { swaggerPlugin } from './plugins/swagger';
 import { jwtPlugin } from './plugins/jwt';
-import {authPlugin} from './plugins/auth'
+import { authPlugin } from './plugins/auth'
 import { handleError } from './utils/error/handler';
 import { authRouter } from '@/components/auth/auth.routes';
 import { userRouter } from '@/components/users/user.routes';
 import { productRouter } from './components/products/product.routes';
 import { orderRouter } from './components/orders/order.routes';
+import { cookiePlugin } from './plugins/cookie';
 
 global.XMLHttpRequest = xhr2;
 
@@ -44,6 +45,7 @@ export async function createServer() {
   });
 
   await server.register(rateLimit);
+
   if (process.env.NODE_ENV === 'production') {
     await server.register(helmet);
   } else {
@@ -60,18 +62,7 @@ export async function createServer() {
     await server.authenticate(req, res)
   })
 
-  // await authPlugin(server)
-  // server.addHook('preHandler', async (req, res) => {
-  //   if (!req.url.startsWith('/api/v1/auth')) {
-  //     try {
-  //       await server.auth([server.authorize]);
-  //       console.log('Autenticación exitosa');
-  //     } catch (error) {
-  //       console.error('Error de autenticación:', error);
-  //       return res.status(401).send({ error: 'Unauthorized' });
-  //     }
-  //   }
-  // });
+  await cookiePlugin(server),
 
   await authPlugin(server)
   server.addHook('preHandler', server.auth([
@@ -91,9 +82,6 @@ export async function createServer() {
     });
   }
 
-  // routes
-  // await server.register(userRoutes, { prefix: '/api' });
-
   await server.register(cors, {
     origin: JSON.parse(process.env.CORS_ORIGINS ?? '["*"]'),
     credentials: true,
@@ -103,10 +91,10 @@ export async function createServer() {
 
   // routes
 
-  await server.register(authRouter, {prefix: '/api/v1/auth'});
-  await server.register(userRouter, {prefix: '/api/v1/users'});
-  await server.register(productRouter, {prefix: '/api/v1/products'});
-  await server.register(orderRouter, {prefix: '/api/v1/orders'});
+  await server.register(authRouter, { prefix: '/api/v1/auth' });
+  await server.register(userRouter, { prefix: '/api/v1/users' });
+  await server.register(productRouter, { prefix: '/api/v1/products' });
+  await server.register(orderRouter, { prefix: '/api/v1/orders' });
 
   await server.ready();
   return server;

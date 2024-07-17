@@ -5,9 +5,9 @@ export async function userRouter(
   fastify: FastifyInstance,
   options?: FastifyPluginOptions
 ) {
-  fastify.get('/:id', {config: { allowedRoles: ['admin', 'client'] }}, userController.findOne);
-  
-  fastify.get('/:id/orders', {config: { allowedRoles: ['admin', 'client'] }}, userController.findOrders);
+  fastify.get('/:id', { config: { allowedRoles: ['admin', 'client'] } }, userController.findOne);
 
-  fastify.get('/',{config: { allowedRoles: ['admin'] }}, userController.findAll);
+  fastify.get('/:id/orders', { config: { allowedRoles: ['admin', 'client'] } }, userController.findOrders);
+
+  fastify.get('/', { config: { allowedRoles: ['admin'] } }, userController.findAll);
 }

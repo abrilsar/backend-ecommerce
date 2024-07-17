@@ -3,7 +3,8 @@ import { TSignInInput } from './auth.dto';
 import { User } from '@/components/users/user.model';
 import { userDefinition } from '@avila-tek/models';
 import { verify } from 'argon2';
-import { FastifyRequest } from 'fastify';
+import { FastifyReply, FastifyRequest } from 'fastify';
+import { setCookie } from '@/plugins/cookie';
 
 /**
  * @async
@@ -21,23 +22,25 @@ import { FastifyRequest } from 'fastify';
  * @version 1
  */
 
-async function signIn(req: FastifyRequest<{ Body: TSignInInput }>) {
-  const {email, password} = req.body
+async function signIn(req: FastifyRequest<{ Body: TSignInInput }>, reply: FastifyReply) {
+  const { email, password } = req.body
 
   try {
-    
-    let user = await User.findOne({email})
 
-    if(!user){
+    let user = await User.findOne({ email })
+
+    if (!user) {
       throw Error('401-invalidCredentials')
     }
 
     const valid = await verify(user.password, password)
 
-    if(!valid){
+    if (!valid) {
       throw Error('401-invalidPassword')
     }
     const token = req.jwt.sign(user.toJSON())
+    setCookie(reply, 'access_token', token, 8)
+
 
     return {
       user,
@@ -46,31 +49,33 @@ async function signIn(req: FastifyRequest<{ Body: TSignInInput }>) {
 
   } catch (error: any) {
     console.log("Erorr: ", error)
-    throw Error(error.message === ''? '500-default': error.message)
+    throw Error(error.message === '' ? '500-default' : error.message)
   }
 }
 
-async function register(req: FastifyRequest<{ Body: typeof userDefinition._type }>) {
-const {email} = req.body
+async function register(req: FastifyRequest<{ Body: typeof userDefinition._type }>, reply: FastifyReply) {
+  const { email } = req.body
   try {
-    let user = await User.findOne({email})
+    let user = await User.findOne({ email })
 
-    if (user){
+    if (user) {
       throw Error('409-userAlreadyExists')
     }
     user = new User(req.body)
-    
+
     await user.save()
 
-    const token = jwt.sign(user.toJSON(), process.env.JWT_SECRET!, {expiresIn: '2h'});
-    
+    const token = jwt.sign(user.toJSON(), process.env.JWT_SECRET!, { expiresIn: '2h' });
+
+    setCookie(reply, 'access_token', token, 8)
+
     return {
       user,
       token,
     };
 
   } catch (error: any) {
-    throw Error(error.message === ''? '500-default': error.message)
+    throw Error(error.message === '' ? '500-default' : error.message)
   }
 
 

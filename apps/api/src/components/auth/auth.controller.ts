@@ -8,15 +8,15 @@ async function signIn(
   reply: FastifyReply
 ) {
   // TODO: fix this type here
-  return authService.signIn(request);
+  return authService.signIn(request, reply);
 }
 
 async function register(
   request: FastifyRequest<{ Body: typeof userDefinition._type }>,
   reply: FastifyReply
 ) {
-  // TODO: fix this type here
-  return authService.register(request);
+  // TODO: fix this type herea
+  return authService.register(request, reply);
 }
 
-export const authController = Object.freeze({ signIn, register});
+export const authController = Object.freeze({ signIn, register });
