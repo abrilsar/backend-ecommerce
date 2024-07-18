@@ -38,17 +38,19 @@ async function signIn(req: FastifyRequest<{ Body: TSignInInput }>, reply: Fastif
     if (!valid) {
       throw Error('401-invalidPassword')
     }
-    const token = req.jwt.sign(user.toJSON())
-    setCookie(reply, 'access_token', token, 8)
 
+    const token = req.jwt.sign(user.toJSON())
+    const refresh_token = req.jwt.sign(user.toJSON(), { expiresIn: '7d' })
+    setCookie(reply, 'access_token', token, 8)
+    setCookie(reply, 'refresh_token', refresh_token, 7 * 24)
 
     return {
       user,
       token,
+      refresh_token,
     };
 
   } catch (error: any) {
-    console.log("Erorr: ", error)
     throw Error(error.message === '' ? '500-default' : error.message)
   }
 }
@@ -65,13 +67,17 @@ async function register(req: FastifyRequest<{ Body: typeof userDefinition._type 
 
     await user.save()
 
-    const token = jwt.sign(user.toJSON(), process.env.JWT_SECRET!, { expiresIn: '2h' });
+    // const token = jwt.sign(user.toJSON(), process.env.JWT_SECRET!, { expiresIn: '2h' });
 
+    const token = req.jwt.sign(user.toJSON())
+    const refresh_token = req.jwt.sign(user.toJSON(), { expiresIn: '7d' })
     setCookie(reply, 'access_token', token, 8)
+    setCookie(reply, 'refresh_token', refresh_token, 7 * 24)
 
     return {
       user,
       token,
+      refresh_token,
     };
 
   } catch (error: any) {

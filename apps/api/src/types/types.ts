@@ -37,7 +37,7 @@ declare module 'fastify' {
 
     interface FastifyRequest {
         jwt: JWT
-      }
+    }
 
 }
 
@@ -51,9 +51,9 @@ export interface UserPayload {
 
 declare module '@fastify/jwt' {
     interface FastifyJWT {
-      payload: UserPayload
+        payload: UserPayload
     }
-  }
+}
 
 export interface PaginationOptions {
     limit: number;
@@ -61,7 +61,7 @@ export interface PaginationOptions {
     direction: 'next' | 'prev';
     sort?: string;
     query?: any;
-  }
+}
 
 export interface PaginationResults {
     results: any[],
@@ -73,4 +73,4 @@ export interface PaginationResults {
 
 export interface ParamsType {
     id: string;
-  }
+}

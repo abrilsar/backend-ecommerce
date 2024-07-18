@@ -1,6 +1,6 @@
 import type { z } from 'zod';
 import { Schema, type Types, type Document } from 'mongoose';
-import { orderDefinition , purchaseDefinition} from './order.dto';
+import { orderDefinition, purchaseDefinition } from './order.dto';
 
 
 export type IPurchase = z.infer<typeof purchaseDefinition>;

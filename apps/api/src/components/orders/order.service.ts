@@ -5,7 +5,7 @@ import { Product } from '../products/product.model';
 
 
 async function findOne(args: any) {
-  return await Order.findById({...args}).populate('user', 'name email', User).populate('purchase.product','name description price category', Product);
+  return await Order.findById({ ...args }).populate('user', 'name email', User).populate('purchase.product', 'name description price category', Product);
 }
 
 async function findAll(args: any) {
@@ -18,12 +18,12 @@ async function findAll(args: any) {
 }
 
 async function deleteOne(args: any) {
-  const order = await Order.findByIdAndDelete({...args})
+  const order = await Order.findByIdAndDelete({ ...args })
 
-  if (order){
+  if (order) {
     const user = await User.findOneAndUpdate(
       { _id: order.user },
-      { $pull: { purchases: { id: order._id } } },
+      { $pull: { orders: { id: order._id } } },
       { new: true }
     );
 
@@ -34,19 +34,19 @@ async function deleteOne(args: any) {
 }
 
 async function updateOne(filter: any, update: any) {
-  return Order.findOneAndUpdate(filter,update, { new: true });
+  return Order.findOneAndUpdate(filter, update, { new: true });
 }
 
 async function createOne(args: any) {
-  const newOrder = new Order({...args})
+  const newOrder = new Order({ ...args })
   await newOrder.save();
 
   const user = await User.findOneAndUpdate(
     { _id: args.user },
-    { $push: { purchases: newOrder._id } },
+    { $push: { orders: newOrder._id } },
     { new: true }
   )
-
+  console.log("UserR: ", user)
   await user?.save()
 
 

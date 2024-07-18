@@ -7,10 +7,10 @@ import { ParamsType } from '@/types/types';
 
 
 async function findOne(request: FastifyRequest<{ Params: ParamsType }>, reply: FastifyReply) {
-  return productService.findOne({_id: request.params.id});
+  return productService.findOne({ _id: request.params.id });
 }
 
-async function findAll(request: FastifyRequest<{Querystring: PaginationOptions}>, reply: FastifyReply) {
+async function findAll(request: FastifyRequest<{ Querystring: PaginationOptions }>, reply: FastifyReply) {
   const options: PaginationOptions = {
     limit: request.query.limit ? Number(request.query.limit) : 10,
     cursor: request.query.cursor || undefined,
@@ -18,19 +18,19 @@ async function findAll(request: FastifyRequest<{Querystring: PaginationOptions}>
     sort: request.query.sort || undefined,
     query: request.query.query || {},
   };
-  
+
   return productService.findAll(options);
 }
 
 async function deleteOne(request: FastifyRequest<{ Params: ParamsType }>, reply: FastifyReply) {
-  return productService.deleteOne({_id: request.params.id});
+  return productService.deleteOne({ _id: request.params.id });
 }
 
-async function updateOne(request: FastifyRequest<{ Params: ParamsType, Body: typeof productDefinition}>, reply: FastifyReply) {
-  return productService.updateOne({_id: request.params.id}, request.body);
+async function updateOne(request: FastifyRequest<{ Params: ParamsType, Body: typeof productDefinition }>, reply: FastifyReply) {
+  return productService.updateOne({ _id: request.params.id }, request.body);
 }
 
-async function createOne(request: FastifyRequest<{Body: typeof productDefinition}>, reply: FastifyReply) {
+async function createOne(request: FastifyRequest<{ Body: typeof productDefinition }>, reply: FastifyReply) {
   return productService.createOne(request.body);
 }
 

@@ -7,7 +7,6 @@ async function signIn(
   request: FastifyRequest<{ Body: TSignInInput }>,
   reply: FastifyReply
 ) {
-  // TODO: fix this type here
   return authService.signIn(request, reply);
 }
 

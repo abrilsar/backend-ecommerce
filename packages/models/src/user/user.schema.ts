@@ -25,11 +25,11 @@ export const userSchema = new Schema<IUser, UserDocument>(
       type: String,
       required: [true, ''],
     },
-    roles:{
+    roles: {
       type: [{ type: String, enum: ['admin', 'client', 'owner'] }],
       required: [true, ''],
     },
-    orders:{
+    orders: {
       type: [Schema.Types.ObjectId],
       required: [true, ''],
     }
