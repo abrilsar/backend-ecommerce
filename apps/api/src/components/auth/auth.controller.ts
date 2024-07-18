@@ -14,8 +14,15 @@ async function register(
   request: FastifyRequest<{ Body: typeof userDefinition._type }>,
   reply: FastifyReply
 ) {
-  // TODO: fix this type herea
   return authService.register(request, reply);
 }
 
-export const authController = Object.freeze({ signIn, register });
+async function signOut( 
+  request: FastifyRequest,
+  reply: FastifyReply) {
+  console.log('chissss')
+
+  return authService.signOut(reply)
+}
+
+export const authController = Object.freeze({ signIn, register, signOut });

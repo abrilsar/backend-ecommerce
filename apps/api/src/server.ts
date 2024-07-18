@@ -54,18 +54,18 @@ export async function createServer() {
 
   await jwtPlugin(server),
 
-  server.addHook('onRequest', async (req, res) => {
-    if (req.url.startsWith('/api/v1/auth')) {
-      req.jwt = server.jwt
-      return
-    }
-    await server.authenticate(req, res)
-  })
+    server.addHook('onRequest', async (req, res) => {
+      if (req.url.startsWith('/api/v1/auth')) {
+        req.jwt = server.jwt
+        return
+      }
+      await server.authenticate(req, res)
+    })
 
   await cookiePlugin(server),
 
-  await authPlugin(server)
-  
+    await authPlugin(server)
+
   server.addHook('preHandler', server.auth([
     server.authorize
   ]))
@@ -91,6 +91,10 @@ export async function createServer() {
   server.setErrorHandler(handleError);
 
   // routes
+
+  server.get('/', async (request, reply) => {
+    return { message: 'Bienvenido a la api rest de Fastify!' };
+  })
 
   await server.register(authRouter, { prefix: '/api/v1/auth' });
   await server.register(userRouter, { prefix: '/api/v1/users' });

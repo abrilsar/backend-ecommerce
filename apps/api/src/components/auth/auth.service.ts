@@ -87,7 +87,21 @@ async function register(req: FastifyRequest<{ Body: typeof userDefinition._type 
 
 }
 
+async function signOut(reply: FastifyReply) {
+  console.log('ajiskdnasjdkladslkdsankl')
+  try {
+    reply.clearCookie('access_token')
+    reply.clearCookie('refresh_token')
+    return "Sesión Cerrada"
+  } catch (error: any) {
+    console.log('ERrrorr:')
+    throw Error(error.message)
+  }
+}
+
+
 export const authService = Object.freeze({
   signIn,
   register,
+  signOut,
 });

@@ -78,4 +78,36 @@ export async function authRouter(
       }
     },
     authController.register);
+
+     /** DOC
+ * @api {post} /auth/register Registro de usuario
+ * @apiDescription Endpoint para registrar un nuevo usuario como cliente o administrador.
+ *
+ * @apiAuth admin, client
+ *
+ * @apiParam {String} name Nombre del usuario.
+ * @apiParam {String} email Correo electrónico del usuario.
+ * @apiParam {String} password Contraseña del usuario.
+ * @apiParam {String[]} roles Roles del usuario. Puede ser 'admin' o 'client'.
+ * @apiParam {String[]} [orders] Órdenes del usuario (inicialmente se manda vacio)
+ * Body: 
+  {
+  "name": "John Doe",
+  "email": "johndoe@example.com",
+  "password": "secretpassword",
+  "roles": ["admin"],
+  "orders": []
+  }
+ * @apiParam {String} email Correo electrónico del usuario.
+ * @apiParam {String} password Contraseña del usuario.
+ * @apiSuccess {Object} el usuario
+ * @apiExample {curl} Ejemplo de uso:
+ *     curl -X POST http://api.example.com/api/v1/auth/register
+ */
+
+    fastify.delete('/sign-out', authController.signOut);
 }
+
+
+
+  
