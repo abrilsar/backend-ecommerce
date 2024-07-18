@@ -12,7 +12,7 @@ export async function jwtPlugin<FastifyJWTOptions>(server: FastifyInstance) {
     await server.register(fastifyJwt, {
         secret: process.env.JWT_SECRET!,
         decode: { complete: true },
-        sign: { algorithm: 'HS256', expiresIn: '1m' },
+        sign: { algorithm: 'HS256', expiresIn: '8h' },
         decoratorName: 'jwt',
     })
 
