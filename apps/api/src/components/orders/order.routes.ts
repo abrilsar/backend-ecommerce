@@ -5,7 +5,7 @@ import type { FastifyInstance, FastifyPluginOptions } from 'fastify';
 
 /**
  * @apiprefix /api/v1/orders
- * @description rutas que tiene que ver con la gestion de los productos
+ * @description rutas que tiene que ver con la gestion de los pedidos
  **/
 
 
@@ -31,14 +31,14 @@ export async function orderRouter(
  * @apiAuth admin
  * @apiSuccess {Object} la compra
  * @apiExample {curl} Ejemplo de uso:
- *     curl -X GET http://api.example.com/api/v1/orders/6698723384d199bd63e20588
+ *     curl -X GET http://localhost:3000/api/v1/orders/6698723384d199bd63e20588
  */
 
   fastify.get('/:id', orderController.findOne);
 
 
   /** DOC
-* @api {get} / ver compras
+* @api {get} / ver pedidos
 * @apiDescription Endpoint para ver un prodcucto en específico.
 * 
 * @apiAuth admin
@@ -46,17 +46,17 @@ export async function orderRouter(
 * @apiParam {String} cursor Cursor para la paginación
 * @apiParam {Number} limit=10 Límite de resultados por página
 * @apiParam {String} direction para saber si ir hacia la pagina de adelante o la de atras (next || prev) 
-* @apiSuccess {Object[]} Las compras por página 
+* @apiSuccess {Object[]} Los pedidos por página 
 * @apiExample {curl} Ejemplo de uso:
-*     curl -X GET http://api.example.com/api/v1/orders?limit=2&cursor=6698728d84d199bd63e2058e&direction=next  (da la segunda pagina)
+*     curl -X GET http://localhost:3000/api/v1/orders?limit=2&cursor=6698728d84d199bd63e2058e&direction=next  (da la segunda pagina)
 */
 
   fastify.get('/', orderController.findAll);
 
 
   /** DOC
-* @api {post} / Registro de una compra
-* @apiDescription Endpoint para registrar una nueva compra.
+* @api {post} / Registro de una pedido
+* @apiDescription Endpoint para registrar una nueva pedido.
 *
 * @apiAuth admin
 *
@@ -64,7 +64,7 @@ export async function orderRouter(
 * @apiParam {Object[]} purchase Productos comprados en la orden.
 * @apiParam {Number} total Monto total de la orden.
 * @apiParam {String} state Estado de la orden (pending, sent, delivered, canceled).
-* @apiParam {Date} date Fecha de la orden.
+* @apiParam {Date} date Fecha del pedido.
 *
 * @apiParamExample {json} Body:
  * {
@@ -87,7 +87,7 @@ export async function orderRouter(
 
 * @apiSuccess {Object} el producto
 * @apiExample {curl} Ejemplo de uso:
-*     curl -X POST http://api.example.com/api/v1/products/
+*     curl -X POST http://localhost:3000/api/v1/products
 */
 
 
@@ -106,14 +106,14 @@ export async function orderRouter(
 
 
   /** DOC
-* @api {delete} / Borrar una compra
-* @apiDescription Endpoint para borrar una compra.
+* @api {delete} / Borrar un pedido
+* @apiDescription Endpoint para borrar un pedido.
 *
 * @apiAuth admin
 * 
-* @apiSuccess {Object} la compra
+* @apiSuccess {Object} el pedido
 * @apiExample {curl} Ejemplo de uso:
-*     curl -X DELETE http://api.example.com/api/v1/orders/
+*     curl -X DELETE http://localhost:3000/api/v1/orders/6698733284d199bd63e205a0
 */
 
   fastify.delete('/:id', orderController.deleteOne);
@@ -132,7 +132,7 @@ export async function orderRouter(
 }
 * @apiSuccess {Object} la compra
 * @apiExample {curl} Ejemplo de uso:
-*     curl -X PATCH http://api.example.com/api/v1/orders/6698723384d199bd63e20588
+*     curl -X PATCH http://localhost:3000/api/v1/orders/669872f584d199bd63e2059a
 */
 
 

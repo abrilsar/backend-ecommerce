@@ -35,7 +35,7 @@ export async function authRouter(
  * @apiSuccess {String} refreshToken Token de refresco.
  * @apiSuccess {Object} el usuario
   * @apiExample {curl} Ejemplo de uso:
-  *     curl -X POST http://api.example.com/api/v1/auth/sig-in
+  *     curl -X POST http://localhost:3000/api/v1/auth/sign-in
   */
 
   fastify.post('/sign-in', authController.signIn);
@@ -64,7 +64,7 @@ export async function authRouter(
  * @apiParam {String} password Contraseña del usuario.
  * @apiSuccess {Object} el usuario
  * @apiExample {curl} Ejemplo de uso:
- *     curl -X POST http://api.example.com/api/v1/auth/register
+ *     curl -X POST http://localhost:3000/api/v1/auth/register
  */
 
   fastify.post('/register',
@@ -80,29 +80,13 @@ export async function authRouter(
     authController.register);
 
      /** DOC
- * @api {post} /auth/register Registro de usuario
- * @apiDescription Endpoint para registrar un nuevo usuario como cliente o administrador.
+ * @api {post} /auth/sign-out Log-out de usuario
+ * @apiDescription Endpoint para que el usuario cierre sesión. 
  *
  * @apiAuth admin, client
- *
- * @apiParam {String} name Nombre del usuario.
- * @apiParam {String} email Correo electrónico del usuario.
- * @apiParam {String} password Contraseña del usuario.
- * @apiParam {String[]} roles Roles del usuario. Puede ser 'admin' o 'client'.
- * @apiParam {String[]} [orders] Órdenes del usuario (inicialmente se manda vacio)
- * Body: 
-  {
-  "name": "John Doe",
-  "email": "johndoe@example.com",
-  "password": "secretpassword",
-  "roles": ["admin"],
-  "orders": []
-  }
- * @apiParam {String} email Correo electrónico del usuario.
- * @apiParam {String} password Contraseña del usuario.
- * @apiSuccess {Object} el usuario
+ * 
  * @apiExample {curl} Ejemplo de uso:
- *     curl -X POST http://api.example.com/api/v1/auth/register
+ *     curl -X DELETE http://localhost:3000/api/v1/auth/sign-out
  */
 
     fastify.delete('/sign-out', authController.signOut);

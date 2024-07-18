@@ -20,7 +20,6 @@ async function register(
 async function signOut( 
   request: FastifyRequest,
   reply: FastifyReply) {
-  console.log('chissss')
 
   return authService.signOut(reply)
 }

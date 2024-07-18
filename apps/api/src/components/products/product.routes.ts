@@ -32,7 +32,7 @@ export async function productRouter(
  * @apiAuth admin o client
  * @apiSuccess {Object} el producto
  * @apiExample {curl} Ejemplo de uso:
- *     curl -X GET http://api.example.com/api/v1/products/6698439637921c647a2f67a8
+ *     curl -X GET http://localhost:3000/api/v1/products/669842f537921c647a2f679e
  */
 
   fastify.get('/:id', productController.findOne);
@@ -49,7 +49,7 @@ export async function productRouter(
 * @apiParam {String} direction para saber si ir hacia la pagina de adelante o la de atras (next || prev) 
 * @apiSuccess {Object[]} Los productos por página 
 * @apiExample {curl} Ejemplo de uso:
-*     curl -X GET http://api.example.com/api/v1/products?limit=3&cursor=6698433f37921c647a2f67a2&direction=next  (da la segunda pagina)
+*     curl -X GET http://localhost:3000/api/v1/products?limit=3&cursor=6698433f37921c647a2f67a2&direction=next  (da la segunda pagina)
 */
 
   fastify.get('/', productController.findAll);
@@ -69,7 +69,7 @@ export async function productRouter(
 
 * @apiSuccess {Object} el producto
 * @apiExample {curl} Ejemplo de uso:
-*     curl -X POST http://api.example.com/api/v1/products/
+*     curl -X POST http://localhost:3000/api/v1/products/
 */
 
   fastify.post('/',
@@ -93,7 +93,7 @@ export async function productRouter(
 * 
 * @apiSuccess {Object} el producto
 * @apiExample {curl} Ejemplo de uso:
-*     curl -X DELETE http://api.example.com/api/v1/products/669843ba37921c647a2f67aa
+*     curl -X DELETE http://localhost:3000/api/v1/products/669848903d75ecb6e50e1bc1
 */
 
   fastify.delete('/:id', productController.deleteOne);
@@ -112,7 +112,7 @@ export async function productRouter(
 }
 * @apiSuccess {Object} el producto
 * @apiExample {curl} Ejemplo de uso:
-*     curl -X PATCH http://api.example.com/api/v1/products/669843ba37921c647a2f67aa
+*     curl -X PATCH http://localhost:3000/api/v1/products/6698442137921c647a2f67b0
 */
 
   fastify.patch('/:id', productController.updateOne);
