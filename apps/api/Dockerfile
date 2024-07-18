@@ -1,7 +1,6 @@
 FROM node:20-alpine AS base
 RUN apk add --no-cache git libc6-compat
 RUN apk update
-
 ENV SCOPE=@avila-tek/api
 
 FROM base AS builder
