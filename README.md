@@ -1,81 +1,26 @@
-# Turborepo starter
+# Correr el programa
+    Run npm install
+    Run npm run dev
 
-This is an official starter Turborepo.
+# Herramientas
+    Para el desarrollo de la API REST, se optó por utilizar el framework Fastify de Node.js y TypeScript. Fastify proporciona un rendimiento superior y una estructura de desarrollo rápido, mientras que TypeScript asegura la seguridad de tipos. Se utilizó la biblioteca Zod para la validación de esquemas, lo que garantiza que los datos enviados a la API sean coherentes y correctos.
 
-## Using this example
 
-Run the following command:
+# Base de Datos y Estructura de Datos
+    Se seleccionó MongoDB como el sistema de base de datos para la API REST debido a su flexibilidad para manejar datos no estructurados y su escalabilidad horizontal. Se diseñaron tres modelos de datos principales: User, Order y Product.
+    El modelo User mantiene una lista de Orders (pedidos), cada una de las cuales contiene el ID de sus pedidos, creando una relación de referencia con la colección de orders. Cada Order (pedido), a su vez, hace referencia a los Product que se han solicitado. Esta estructura de referencia permite mantener coherencia en los datos y facilita la eliminación de datos relacionados. Cuando se elimina una orden, se borra tanto de la colección Order como de la referencia en el modelo User.
 
-```sh
-npx create-turbo@latest
-```
+# Paginación por Cursor
+    Para optimizar las consultas a la base de datos, se implementó la paginación por cursor. Es una técnica más eficiente con grandes conjuntos de datos, ya que no requiere saltar sobre un número de registros. De esta manera, se mantiene un alto rendimiento incluso con un crecimiento significativo de los datos.
 
-## What's inside?
+# Autenticación y Autorización
+    Para la autenticación de usuarios, se implementó JWT (JSON Web Tokens) con la ayuda de los plugins Fastify JWT. Cuando un usuario inicia sesión, su contraseña se almacena como un hash de Argon2 en la base de datos para garantizar su seguridad. El usuario recibe un token de acceso ( y también se guarda en la cookie del cliente) que tiene una duración de 8 horas, lo que aumenta la seguridad de la API.
+    
+    Además, se implementó la autorización basada en roles utilizando el plugin de Fastify AUTH. Los usuarios pueden tener roles de administrador o cliente y ciertas rutas están restringidas a los administradores. Por ejemplo, solo los administradores pueden ver todas las órdenes realizadas en la plataforma.
 
-This Turborepo includes the following packages/apps:
+    Para proteger los endpoints, se implementó un middleware que verifica la autenticación y autorización del usuario utilizando los hooks, decoradores y plugins de Fastify.
 
-### Apps and Packages
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@avila-tek/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@avila-tek/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@avila-tek/typescript-config`: `tsconfig.json`s used throughout the monorepo
+# Manejo de errores
+    Para un manejo efectivo de errores, se definieron errores específicos que podrían surgir durante el uso de la plataforma. Se proporcionan mensajes de error descriptivos para facilitar la depuración y mejorar la experiencia del usuario.
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
-```
-cd my-turborepo
-pnpm build
-```
-
-### Develop
-
-To develop all apps and packages, run the following command:
-
-```
-cd my-turborepo
-pnpm dev
-```
-
-### Remote Caching
-
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup), then enter the following commands:
-
-```
-cd my-turborepo
-npx turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-npx turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)

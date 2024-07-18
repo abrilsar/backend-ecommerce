@@ -59,7 +59,6 @@ export interface PaginationOptions {
     limit: number;
     cursor?: string;
     direction: 'next' | 'prev';
-    sort?: string;
     query?: any;
 }
 

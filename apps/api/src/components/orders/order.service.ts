@@ -23,7 +23,7 @@ async function deleteOne(args: any) {
   if (order) {
     const user = await User.findOneAndUpdate(
       { _id: order.user },
-      { $pull: { orders: { id: order._id } } },
+      { $pull: { orders: order._id } },
       { new: true }
     );
 

@@ -12,7 +12,7 @@ export async function jwtPlugin<FastifyJWTOptions>(server: FastifyInstance) {
     await server.register(fastifyJwt, {
         secret: process.env.JWT_SECRET!,
         decode: { complete: true },
-        sign: { algorithm: 'HS256', expiresIn: '8h' },
+        sign: { algorithm: 'HS256', expiresIn: '1m' },
         decoratorName: 'jwt',
     })
 
@@ -28,10 +28,10 @@ export async function jwtPlugin<FastifyJWTOptions>(server: FastifyInstance) {
 
                 const refreshToken = request.headers['x-refresh-token'] as string
 
-                if (error.message === errorMessages[2] && refreshToken) {
+                if (error.message === 'Authorization token expired' && refreshToken) {
                     try {
 
-                        const data = request.jwt.verify<FastifyJWT['payload']>(refreshToken)
+                        const data = server.jwt.verify<FastifyJWT['payload']>(refreshToken)
 
                         if (refreshTokenBlacklist.has(refreshToken)) {
                             reply.clearCookie('access_token')
@@ -40,18 +40,19 @@ export async function jwtPlugin<FastifyJWTOptions>(server: FastifyInstance) {
                         }
 
                         refreshTokenBlacklist.add(refreshToken);
-
-                        const token = request.jwt.sign(data)
+                        const token = server.jwt.sign(data)
 
                         setCookie(reply, 'access_token', token, 8)
-
                         request.user = data
+                        
 
                     } catch (error: any) {
+                        console.log('Error: ', error.message)
                         const message = errorMessages[error.message] || "500-default";
                         throw Error(message)
                     }
                 }
+
                 const message = errorMessages[error.message] || "500-default";
                 throw Error(message)
             }

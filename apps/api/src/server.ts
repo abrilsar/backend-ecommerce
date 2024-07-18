@@ -65,6 +65,7 @@ export async function createServer() {
   await cookiePlugin(server),
 
   await authPlugin(server)
+  
   server.addHook('preHandler', server.auth([
     server.authorize
   ]))

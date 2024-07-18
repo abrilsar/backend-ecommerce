@@ -38,14 +38,7 @@ export async function authRouter(
   *     curl -X POST http://api.example.com/api/v1/auth/sig-in
   */
 
-  fastify.post('/sign-in',
-    {
-      schema: { body: signInSchema },
-      errorHandler: (error, _, __) => {
-        throw Error('400-default')
-      }
-    },
-    authController.signIn);
+  fastify.post('/sign-in', authController.signIn);
 
 
   /** DOC

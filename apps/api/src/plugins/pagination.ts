@@ -3,7 +3,7 @@ import mongoose, { FilterQuery, Model } from "mongoose";
 
 export async function paginate(model: Model<any>, options: PaginationOptions): Promise<PaginationResults> {
 
-    const { limit, cursor, direction, query } = options;
+    const { limit, cursor, direction, query} = options;
 
 
     if (typeof limit !== "number" || limit <= 0) {
@@ -19,10 +19,13 @@ export async function paginate(model: Model<any>, options: PaginationOptions): P
     }
 
     const filter: FilterQuery<any> = query;
-    const sortOptions: any = { _id: direction === 'next' ? 1 : -1 };
+    const sortOptions: any = {
+        _id: direction === 'next' ? 1 : -1
+    };
 
     let hasPrev = cursor !== undefined
     let hasNext = undefined
+
     if (cursor) {
         const cursorId = new mongoose.Types.ObjectId(cursor);
         filter._id = direction === 'next' ? { $gt: cursorId, $ne: cursorId } : { $lt: cursorId, $ne: cursorId };
@@ -32,7 +35,6 @@ export async function paginate(model: Model<any>, options: PaginationOptions): P
                 _id: { $lt: cursorId },
                 ...query
             });
-            console.log('Jp;asdasd: ', prevCount - limit)
             hasPrev = (prevCount - limit) > 0;
         }
         if (direction === 'prev') {
@@ -40,7 +42,6 @@ export async function paginate(model: Model<any>, options: PaginationOptions): P
                 _id: { $lt: cursorId },
                 ...query
             });
-            console.log('Jp;asdasd: ', prevCount - limit)
             hasPrev = (prevCount - limit) > 0;
         }
 
@@ -53,7 +54,6 @@ export async function paginate(model: Model<any>, options: PaginationOptions): P
         }
     }
 
-    console.log("FIlter: ", typeof filter)
 
     try {
         const results = await model.aggregate([
@@ -82,3 +82,16 @@ export async function paginate(model: Model<any>, options: PaginationOptions): P
     }
 }
 
+
+
+export const getQuery = (userQueryString: string) => {
+    let userQuery: FilterQuery<any> = {};
+
+    let queryPairs = userQueryString.split('-');
+    for (let pair of queryPairs) {
+        let [key, value] = pair.split('=');
+        userQuery[key!.trim()] = value!.trim();
+    }
+
+    return userQuery
+}

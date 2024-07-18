@@ -3,6 +3,7 @@ import { productService } from '@/components/products/product.service';
 import { productDefinition } from '@avila-tek/models';
 import { PaginationOptions } from "@/types/types";
 import { ParamsType } from '@/types/types';
+import { getQuery } from '@/plugins/pagination';
 
 
 
@@ -10,13 +11,18 @@ async function findOne(request: FastifyRequest<{ Params: ParamsType }>, reply: F
   return productService.findOne({ _id: request.params.id });
 }
 
+
 async function findAll(request: FastifyRequest<{ Querystring: PaginationOptions }>, reply: FastifyReply) {
+  
+  const query = request.query.query? request.query.query.split('='): []
+  const userQuery =  query.length > 1 ? getQuery(request.query.query): {}
+
+
   const options: PaginationOptions = {
     limit: request.query.limit ? Number(request.query.limit) : 10,
     cursor: request.query.cursor || undefined,
     direction: request.query.direction || 'next',
-    sort: request.query.sort || undefined,
-    query: request.query.query || {},
+    query: userQuery,
   };
 
   return productService.findAll(options);

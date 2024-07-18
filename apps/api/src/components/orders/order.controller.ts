@@ -2,6 +2,7 @@ import type { FastifyRequest, FastifyReply } from 'fastify';
 import { orderService } from '@/components/orders/order.service';
 import { orderDefinition } from '@avila-tek/models';
 import { PaginationOptions } from '@/types/types';
+import { getQuery } from '@/plugins/pagination';
 
 interface ParamsType {
   id: string;
@@ -12,14 +13,17 @@ async function findOne(request: FastifyRequest<{ Params: ParamsType }>, reply: F
 }
 
 async function findAll(request: FastifyRequest<{ Querystring: PaginationOptions }>, reply: FastifyReply) {
+  const query = request.query.query? request.query.query.split('='): []
+  const userQuery =  query.length > 1 ? getQuery(request.query.query): {}
+
+
   const options: PaginationOptions = {
     limit: request.query.limit ? Number(request.query.limit) : 10,
     cursor: request.query.cursor || undefined,
     direction: request.query.direction || 'next',
-    sort: request.query.sort || undefined,
-    query: request.query.query || {},
+    query: userQuery,
   };
-
+  
   return orderService.findAll(options);
 }
 
