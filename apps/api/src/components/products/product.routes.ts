@@ -32,7 +32,7 @@ export async function productRouter(
  * @apiAuth admin o client
  * @apiSuccess {Object} el producto
  * @apiExample {curl} Ejemplo de uso:
- *     curl -X GET http://localhost:3000/api/v1/products/669842f537921c647a2f679e
+ *     curl -X GET https://backend-ecommerce-6-oj5e.onrender.com/api/v1/products/669842f537921c647a2f679e
  */
 
   fastify.get('/:id', productController.findOne);
@@ -46,10 +46,12 @@ export async function productRouter(
 * 
 * @apiParam {String} cursor Cursor para la paginación
 * @apiParam {Number} limit=10 Límite de resultados por página
-* @apiParam {String} direction para saber si ir hacia la pagina de adelante o la de atras (next || prev) 
+* @apiParam {String} direction para saber si ir hacia la pagina de adelante o la de atras (next || prev)
+* @apiParam {String} query para buscar por una característica en específico 
 * @apiSuccess {Object[]} Los productos por página 
 * @apiExample {curl} Ejemplo de uso:
-*     curl -X GET http://localhost:3000/api/v1/products?limit=3&cursor=6698433f37921c647a2f67a2&direction=next  (da la segunda pagina)
+*     curl -X GET https://backend-ecommerce-6-oj5e.onrender.com/api/v1/products?limit=3&cursor=6698433f37921c647a2f67a2&direction=next  (da la segunda pagina)
+*     curl -X GET https://backend-ecommerce-6-oj5e.onrender.com/api/v1/products?limit=2&query=category=Ropa
 */
 
   fastify.get('/', productController.findAll);
@@ -69,7 +71,7 @@ export async function productRouter(
 
 * @apiSuccess {Object} el producto
 * @apiExample {curl} Ejemplo de uso:
-*     curl -X POST http://localhost:3000/api/v1/products/
+*     curl -X POST https://backend-ecommerce-6-oj5e.onrender.com/api/v1/products/
 */
 
   fastify.post('/',
@@ -93,7 +95,7 @@ export async function productRouter(
 * 
 * @apiSuccess {Object} el producto
 * @apiExample {curl} Ejemplo de uso:
-*     curl -X DELETE http://localhost:3000/api/v1/products/669848903d75ecb6e50e1bc1
+*     curl -X DELETE https://backend-ecommerce-6-oj5e.onrender.com/api/v1/products/669848903d75ecb6e50e1bc1
 */
 
   fastify.delete('/:id', productController.deleteOne);
@@ -112,7 +114,7 @@ export async function productRouter(
 }
 * @apiSuccess {Object} el producto
 * @apiExample {curl} Ejemplo de uso:
-*     curl -X PATCH http://localhost:3000/api/v1/products/6698442137921c647a2f67b0
+*     curl -X PATCH https://backend-ecommerce-6-oj5e.onrender.com/api/v1/products/6698442137921c647a2f67b0
 */
 
   fastify.patch('/:id', productController.updateOne);

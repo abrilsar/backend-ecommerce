@@ -13,7 +13,7 @@ export async function userRouter(
  * @apiAuth admin o client
  * @apiSuccess {Object} el cliente
  * @apiExample {curl} Ejemplo de uso:
- *     curl -X GET http://localhost:3000/api/v1/users/669844a237921c647a2f67b3
+ *     curl -X GET https://backend-ecommerce-6-oj5e.onrender.com/api/v1/users/669844a237921c647a2f67b3
  */
 
   fastify.get('/:id', { config: { allowedRoles: ['admin', 'client'] } }, userController.findOne);
@@ -25,7 +25,7 @@ export async function userRouter(
  * @apiAuth admin o client
  * @apiSuccess {Object[]} pedidos del cliente
  * @apiExample {curl} Ejemplo de uso:
- *     curl -X GET http://localhost:3000/api/v1/users/669844a237921c647a2f67b3/orders
+ *     curl -X GET https://backend-ecommerce-6-oj5e.onrender.com/api/v1/users/669844a237921c647a2f67b3/orders
  */
 
   fastify.get('/:id/orders', { config: { allowedRoles: ['admin', 'client'] } }, userController.findOrders);
@@ -41,7 +41,7 @@ export async function userRouter(
   * @apiAuth admin
   * @apiSuccess {Object[]} clientes
   * @apiExample {curl} Ejemplo de uso:
-  *     curl -X GET http://localhost:3000/api/v1/users
+  *     curl -X GET https://backend-ecommerce-6-oj5e.onrender.com/api/v1/users
   */
 
 

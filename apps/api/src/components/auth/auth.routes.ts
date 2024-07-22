@@ -35,7 +35,7 @@ export async function authRouter(
  * @apiSuccess {String} refreshToken Token de refresco.
  * @apiSuccess {Object} el usuario
   * @apiExample {curl} Ejemplo de uso:
-  *     curl -X POST http://localhost:3000/api/v1/auth/sign-in
+  *     curl -X POST https://backend-ecommerce-6-oj5e.onrender.com/api/v1/auth/sign-in
   */
 
   fastify.post('/sign-in', authController.signIn);
@@ -64,7 +64,7 @@ export async function authRouter(
  * @apiParam {String} password Contraseña del usuario.
  * @apiSuccess {Object} el usuario
  * @apiExample {curl} Ejemplo de uso:
- *     curl -X POST http://localhost:3000/api/v1/auth/register
+ *     curl -X POST https://backend-ecommerce-6-oj5e.onrender.com/api/v1/auth/register
  */
 
   fastify.post('/register',
@@ -86,7 +86,7 @@ export async function authRouter(
  * @apiAuth admin, client
  * 
  * @apiExample {curl} Ejemplo de uso:
- *     curl -X DELETE http://localhost:3000/api/v1/auth/sign-out
+ *     curl -X DELETE https://backend-ecommerce-6-oj5e.onrender.com/api/v1/auth/sign-out
  */
 
     fastify.delete('/sign-out', authController.signOut);

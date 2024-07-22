@@ -55,7 +55,7 @@ export async function createServer() {
   await jwtPlugin(server),
 
     server.addHook('onRequest', async (req, res) => {
-      if (req.url.startsWith('/api/v1/auth')) {
+      if (req.url.startsWith('/api/v1/auth') || req.url.startsWith('/api/v1/home')) {
         req.jwt = server.jwt
         return
       }
@@ -92,7 +92,7 @@ export async function createServer() {
 
   // routes
 
-  server.get('/', async (request, reply) => {
+  server.get('/api/v1/home', async (request, reply) => {
     return { message: 'Bienvenido a la api rest de Fastify!' };
   })
 

@@ -31,7 +31,7 @@ export async function orderRouter(
  * @apiAuth admin
  * @apiSuccess {Object} la compra
  * @apiExample {curl} Ejemplo de uso:
- *     curl -X GET http://localhost:3000/api/v1/orders/6698723384d199bd63e20588
+ *     curl -X GET https://backend-ecommerce-6-oj5e.onrender.com/api/v1/orders/6698723384d199bd63e20588
  */
 
   fastify.get('/:id', orderController.findOne);
@@ -45,10 +45,12 @@ export async function orderRouter(
 * 
 * @apiParam {String} cursor Cursor para la paginación
 * @apiParam {Number} limit=10 Límite de resultados por página
-* @apiParam {String} direction para saber si ir hacia la pagina de adelante o la de atras (next || prev) 
+* @apiParam {String} direction para saber si ir hacia la pagina de adelante o la de atras (next || prev)
+* @apiParam {String} query para buscar por una característica en específico
 * @apiSuccess {Object[]} Los pedidos por página 
 * @apiExample {curl} Ejemplo de uso:
-*     curl -X GET http://localhost:3000/api/v1/orders?limit=2&cursor=6698728d84d199bd63e2058e&direction=next  (da la segunda pagina)
+*     curl -X GET https://backend-ecommerce-6-oj5e.onrender.com/api/v1/orders?limit=2&cursor=6698728d84d199bd63e2058e&direction=next  (da la segunda pagina)
+*     curl -X GET https://backend-ecommerce-6-oj5e.onrender.com/api/v1/orders?limit=2&query=state=pending 
 */
 
   fastify.get('/', orderController.findAll);
@@ -87,7 +89,7 @@ export async function orderRouter(
 
 * @apiSuccess {Object} el producto
 * @apiExample {curl} Ejemplo de uso:
-*     curl -X POST http://localhost:3000/api/v1/products
+*     curl -X POST https://backend-ecommerce-6-oj5e.onrender.com/api/v1/products
 */
 
 
@@ -113,7 +115,7 @@ export async function orderRouter(
 * 
 * @apiSuccess {Object} el pedido
 * @apiExample {curl} Ejemplo de uso:
-*     curl -X DELETE http://localhost:3000/api/v1/orders/6698733284d199bd63e205a0
+*     curl -X DELETE https://backend-ecommerce-6-oj5e.onrender.com/api/v1/orders/6698733284d199bd63e205a0
 */
 
   fastify.delete('/:id', orderController.deleteOne);
@@ -132,7 +134,7 @@ export async function orderRouter(
 }
 * @apiSuccess {Object} la compra
 * @apiExample {curl} Ejemplo de uso:
-*     curl -X PATCH http://localhost:3000/api/v1/orders/669872f584d199bd63e2059a
+*     curl -X PATCH https://backend-ecommerce-6-oj5e.onrender.com/api/v1/orders/669872f584d199bd63e2059a
 */
 
 
