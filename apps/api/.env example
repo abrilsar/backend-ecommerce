@@ -1,0 +1,7 @@
+NODE_ENV=development
+PORT=3000
+HOST=0.0.0.0
+JWT_SECRET=129a6f939cf177d3afc3a64bb282384d021f00de93ee927a601335ab1af785cf
+DATABASE=mongodb+srv://asar:UkcqFgViufx6kEAi@backend.lrnm24c.mongodb.net/e-commerce?ssl=true&retryWrites=true&w=majority&appName=backend
+CORS_ORIGINS=["http://localhost:3001","http://localhost:3002"]
+COOKIE_SECRET=1f9ebfeaffea67444ba4cc900d78b4e888bafae09d2c8ef5fa403e095ad1c834
